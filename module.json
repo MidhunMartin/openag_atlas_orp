@@ -1,0 +1,17 @@
+{
+    "description": "Driver for the Atlas Scientific ORP sensor",
+    "class_name": "AtlasOrp",
+    "header_file": "openag_atlas_orp.h",
+    "arguments": [
+        {
+            "name": "i2c_address",
+            "type": "int",
+            "default": 98
+        }
+    ],
+    "outputs": {
+        "water_oxidation_reduction_potential": {
+            "type": "std_msgs/Float32"
+        }
+    }
+}

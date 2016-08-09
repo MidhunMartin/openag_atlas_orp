@@ -5,7 +5,8 @@
 #include "openag_atlas_orp.h"
 
 AtlasOrp::AtlasOrp(int i2c_address) {
-  has_error = false;
+  status_level = OK;
+  status_msg = "";
   _send_water_oxidation_reduction_potential = false;
   _time_of_last_reading = 0;
   _time_of_last_query = 0;
@@ -49,27 +50,28 @@ void AtlasOrp::read_response() {
   Wire.requestFrom(_i2c_address, 20, 1);
   byte response = Wire.read();
   String string = Wire.readStringUntil(0);
-  has_error = false;
+  status_level = OK;
+  status_msg = "";
 
   // Chorpk for failure
   if (response == 255) {
-    error_msg = "No data";
-    has_error = true;
+    status_level = ERROR;
+    status_msg = "No data";
   }
   else if (response == 254) {
-    error_msg = "Tried to read data before request was processed";
-    has_error = true;
+    status_level = ERROR;
+    status_msg = "Tried to read data before request was processed";
   }
   else if (response == 2) {
-    error_msg = "Request failed";
-    has_error = true;
+    status_level = ERROR;
+    status_msg = "Request failed";
   }
   else if (response == 1) { // good reading
     _water_oxidation_reduction_potential = string.toFloat();
     _send_water_oxidation_reduction_potential = true;
   }
   else {
-    error_msg = "Unknown error";
-    has_error = true;
+    status_level = ERROR;
+    status_msg = "Unknown error";
   }
 }

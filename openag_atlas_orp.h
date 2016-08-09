@@ -7,19 +7,16 @@
 
 #include "Arduino.h"
 #include <Wire.h>
+#include <openag_module.h>
 #include <std_msgs/Float32.h>
 
 /**
  * \brief Oxidation/Reduction Potential sensor.
  */
-class AtlasOrp {
+class AtlasOrp : public Module {
   public:
     // Constructor
     AtlasOrp(int i2c_address); // Default is 98
-
-    // Public variables
-    bool has_error;
-    char* error_msg;
 
     // Public functions
     void begin();
@@ -33,7 +30,7 @@ class AtlasOrp {
     uint32_t _time_of_last_reading;
     uint32_t _time_of_last_query;
     bool _waiting_for_response;
-    const static uint32_t _min_update_interval = 3000;
+    const static uint32_t _min_update_interval = 2000;
     int _i2c_address;
 
     // Private functions
