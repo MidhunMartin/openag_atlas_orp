@@ -22,6 +22,7 @@ class AtlasOrp : public Module {
     void begin();
     void update();
     bool get_water_oxidation_reduction_potential(std_msgs::Float32 &msg);
+    void set_calibration(std_msgs::Float32 msg);
 
   private:
     // Private variables

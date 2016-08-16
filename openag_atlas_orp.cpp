@@ -38,6 +38,14 @@ bool AtlasOrp::get_water_oxidation_reduction_potential(std_msgs::Float32 &msg) {
   return res;
 }
 
+void AtlasOrp::set_calibration(std_msgs::Float32 msg) {
+  char buf[11];
+  sprintf(buf, "Cal,%.1f", msg.data);
+  Wire.beginTransmission(_i2c_address);
+  Wire.print(buf);
+  Wire.endTransmission();
+}
+
 void AtlasOrp::send_query() {
   Wire.beginTransmission(_i2c_address); // read message response state
   Wire.print("r");

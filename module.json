@@ -9,6 +9,12 @@
             "default": 98
         }
     ],
+    "inputs": {
+        "calibration": {
+            "type": "std_msgs/Float32",
+            "categories": ["calibration"]
+        }
+    },
     "outputs": {
         "water_oxidation_reduction_potential": {
             "type": "std_msgs/Float32"
