@@ -28,7 +28,6 @@ class AtlasOrp : public Module {
     // Private variables
     float _water_oxidation_reduction_potential;
     bool _send_water_oxidation_reduction_potential;
-    uint32_t _time_of_last_reading;
     uint32_t _time_of_last_query;
     bool _waiting_for_response;
     const static uint32_t _min_update_interval = 2000;
