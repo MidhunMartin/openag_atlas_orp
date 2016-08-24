@@ -19,7 +19,9 @@ void AtlasOrp::begin() {
 
 void AtlasOrp::update() {
   if (_waiting_for_response) {
-    read_response();
+    if (millis() - _time_of_last_query > 1800) {
+      read_response();
+    }
   }
   else if (millis() - _time_of_last_query > _min_update_interval) {
     send_query();
@@ -42,11 +44,11 @@ void AtlasOrp::set_calibration(std_msgs::Float32 msg) {
 }
 
 void AtlasOrp::send_query() {
+  _time_of_last_query = millis();
   Wire.beginTransmission(_i2c_address); // read message response state
   Wire.print("r");
   Wire.endTransmission();
   _waiting_for_response = true;
-  _time_of_last_query = millis();
 }
 
 void AtlasOrp::read_response() {
@@ -57,7 +59,7 @@ void AtlasOrp::read_response() {
   // Check for failure
   if (response == 255) {
     status_level = ERROR;
-    status_msg = "No data";
+    status_msg = "No response";
     _waiting_for_response = false;
   }
   else if (response == 254) {
